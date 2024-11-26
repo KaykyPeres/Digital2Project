@@ -1,0 +1,74 @@
+LIBRARY ieee;
+USE ieee.std_logic_1164.ALL;
+USE ieee.numeric_std.ALL; -- Para usar tipos e operações numéricas
+
+ENTITY teste IS
+END teste;
+
+ARCHITECTURE behavior OF teste IS
+    -- Component Declaration for the Unit Under Test (UUT)
+    COMPONENT VHDL_VL
+    PORT(
+         clock  : IN  std_logic;
+         output : OUT integer range 0 to 7; -- Mudado para OUT
+         reset  : IN  std_logic
+        );
+    END COMPONENT;
+
+    -- Inputs
+    signal clock : std_logic := '0';
+    signal reset : std_logic := '0';
+    
+    -- Outputs (Intermediário)
+    signal output_internal : integer range 0 to 7 := 0;
+
+    -- Contador para sequência
+    signal seq_index : integer range 0 to 6 := 0;
+    constant sequence : integer_vector(0 to 6) := (0, 5, 4, 6, 1, 3, 2);
+
+BEGIN
+    -- Instantiate the Unit Under Test (UUT)
+    uut: VHDL_VL
+    PORT MAP (
+          clock  => clock,
+          output => output_internal,
+          reset  => reset
+        );
+
+    -- Process to implement the counter logic
+    counter_process: process(clock, reset)
+    begin
+        if reset = '1' then
+            seq_index <= 0; -- Reinicia o índice para o início da sequência
+        elsif rising_edge(clock) then
+            seq_index <= (seq_index + 1) mod 7; -- Avança na sequência com wrap-around
+        end if;
+    end process;
+
+    -- Mapeamento do índice para a saída
+    process(seq_index)
+    begin
+        output_internal <= sequence(seq_index);
+    end process;
+
+    -- Clock Generator
+    clock_gen: process
+    begin
+        while true loop
+            clock <= '0';
+            wait for 50 ns;
+            clock <= '1';
+            wait for 50 ns;
+        end loop;
+    end process;
+
+    -- Stimulus process
+    stim_proc: process
+    begin
+        reset <= '1';
+        wait for 100 ns;
+        reset <= '0';
+        wait;
+    end process;
+
+END behavior;
