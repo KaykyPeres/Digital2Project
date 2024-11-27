@@ -8,80 +8,80 @@ ARCHITECTURE behavior OF testepj IS
 
     COMPONENT modulopj
     PORT(
-         clock : IN  std_logic;
-         reset : IN  std_logic;
+         clk : IN  std_logic;
+         rst : IN  std_logic;
          output : BUFFER integer range 0 to 7
         );
     END COMPONENT;
     
-   signal clock : std_logic := '0';
-   signal reset : std_logic := '0';
+   signal clk : std_logic := '0';
+   signal rst : std_logic := '0';
 
    signal output_internal: integer range 0 to 7;
 
 BEGIN
 
     uut: modulopj PORT MAP (
-          clock => clock,
-          reset => reset,
+          clk => clk,
+          rst => rst,
           output => output_internal
         );
 
     stim_proc: process
     begin		
         
-    reset <= '1';
+    rst <= '1';
     wait for 100 ns;
-    reset <= '0';
-    wait for 100 ns;
-		  
-    clock <= '0';
-    wait for 100 ns;
-    clock <= '1';
-    wait for 100 ns;
-    clock <= '0';
+    rts <= '0';
     wait for 100 ns;
 		  
-    clock <= '0';
+    clk <= '0';
     wait for 100 ns;
-    clock <= '1';
+    clk <= '1';
     wait for 100 ns;
-    clock <= '0';
+    clk <= '0';
     wait for 100 ns;
-	 
-    clock <= '0';
+		  
+    clk <= '0';
     wait for 100 ns;
-    clock <= '1';
+    clk <= '1';
     wait for 100 ns;
-    clock <= '0';
-    wait for 100 ns;
-	 
-    clock <= '0';
-    wait for 100 ns;
-    clock <= '1';
-    wait for 100 ns;
-    clock <= '0';
+    clk <= '0';
     wait for 100 ns;
 	 
-    clock <= '0';
+    clk <= '0';
     wait for 100 ns;
-    clock <= '1';
+    clk <= '1';
     wait for 100 ns;
-    clock <= '0';
-    wait for 100 ns;
-	 
-    clock <= '0';
-    wait for 100 ns;
-    clock <= '1';
-    wait for 100 ns;
-    clock <= '0';
+    clk <= '0';
     wait for 100 ns;
 	 
-    clock <= '0';
+    clk <= '0';
     wait for 100 ns;
-    clock <= '1';
+    clk <= '1';
     wait for 100 ns;
-    clock <= '0';
+    clk <= '0';
+    wait for 100 ns;
+	 
+    clk <= '0';
+    wait for 100 ns;
+    clk <= '1';
+    wait for 100 ns;
+    clk <= '0';
+    wait for 100 ns;
+	 
+    clk <= '0';
+    wait for 100 ns;
+    clk <= '1';
+    wait for 100 ns;
+    clk <= '0';
+    wait for 100 ns;
+	 
+    clk <= '0';
+    wait for 100 ns;
+    clk <= '1';
+    wait for 100 ns;
+    clk <= '0';
     wait for 100 ns;
 	 
         wait;
